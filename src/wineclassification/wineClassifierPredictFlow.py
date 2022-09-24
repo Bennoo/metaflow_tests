@@ -1,10 +1,8 @@
-import re
-from typing_extensions import Required
 from metaflow import FlowSpec, step, Flow, Parameter, JSONType
 
 class WineClassifierPredictFlow(FlowSpec):
 
-    vector = Parameter('vector', type=JSONType, help="The vector to predict the class for", Required=True)
+    vector = Parameter('vector', type=JSONType, help="The vector to predict the class for", required=True)
 
     @step
     def start(self):
@@ -17,6 +15,7 @@ class WineClassifierPredictFlow(FlowSpec):
     @step
     def end(self):
         print('Model: ', self.model)
+        print("Predicted class", self.model.predict([self.vector])[0])
 
 if __name__ == '__main__':
     WineClassifierPredictFlow()
